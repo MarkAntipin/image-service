@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "image-service"
+version = "0.1.0"
+description = "service to serve images"
+authors = ["Mark Antipin <antipinsuperstar@yandex.ru>"]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+backend-utils = "^0.2.0"
+python-dotenv = "^0.21.0"
+aioboto3 = "^10.1.0"
+uvicorn = "^0.19.0"
+python-multipart = "^0.0.5"
+Pillow = "^9.2.0"
+
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
