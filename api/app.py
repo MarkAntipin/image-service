@@ -1,11 +1,10 @@
 from logging import getLogger
 
-from fastapi import FastAPI
 from backend_utils.server import register_routers
+from fastapi import FastAPI
 
 from api.routes.v1.app import compiled_routers as v1_routers
 from settings import get_settings
-
 
 logging = getLogger(__name__)
 

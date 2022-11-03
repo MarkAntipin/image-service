@@ -1,14 +1,13 @@
 import io
 from uuid import UUID
+
+from fastapi import (APIRouter, Depends, File, HTTPException, Path, UploadFile,
+                     status)
+from fastapi.responses import StreamingResponse
 from pydantic import BaseModel
 
-from fastapi import APIRouter, status, UploadFile, File, HTTPException, Path, Depends
-from fastapi.responses import StreamingResponse
-
-from src.service.images import (
-    get_images_service, ImagesService, InvalidImageError, ImageNotFoundError
-)
-
+from src.service.images import (ImageNotFoundError, ImagesService,
+                                InvalidImageError, get_images_service)
 
 router = APIRouter()
 

@@ -1,0 +1,11 @@
+[flake8]
+ignore = A002, A003, ANN, B008, B305, D203, I100, I101, I102, I201, U100, T002, ANN102
+exclude =
+    .git,
+    __pycache__,
+    .venv,
+    env,
+    migrations,
+max-complexity = 10
+max-line-length = 120
+format = '%(path)s:%(row)d Column:%(col)d: %(code)s %(text)s'
