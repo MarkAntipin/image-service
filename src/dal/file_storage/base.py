@@ -8,7 +8,7 @@ class SingletonABCMeta(abc.ABCMeta):
     Singleton ABC metaclass
     """
 
-    _instances = {}
+    _instances: dict = {}
 
     def __call__(cls, *args, **kwargs):
         if cls not in cls._instances:

@@ -3,9 +3,9 @@ from uuid import UUID, uuid4
 
 from fastapi import UploadFile
 
+from settings import get_settings
 from src.dal.file_storage.base import BaseFileStorage
 from src.dal.file_storage.s3 import get_s3_file_storage
-from settings import get_settings
 from src.utils.resize_image import resize_image
 
 
@@ -18,8 +18,7 @@ class InvalidImageError(Exception):
 
 class ImageNotFoundError(Exception):
 
-    def __init__(self, content_type):
-        self.content_type = content_type
+    def __init__(self):
         self.detail = 'Image not found'
 
 
@@ -36,7 +35,7 @@ class ImagesService:
     async def get_original_image(self, image_id: UUID) -> bytes:
         image_content = await self._file_storage.get(key=str(image_id))
         if not image_content:
-            raise ImageNotFoundError
+            raise ImageNotFoundError()
         return image_content
 
     async def add_image(self, image: UploadFile) -> UUID:

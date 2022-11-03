@@ -3,8 +3,8 @@ import typing as tp
 import aioboto3
 from botocore.exceptions import ClientError
 
-from src.dal.file_storage.base import BaseFileStorage
 from settings import get_settings
+from src.dal.file_storage.base import BaseFileStorage
 
 
 class S3FileStorage(BaseFileStorage):
