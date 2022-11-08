@@ -3,7 +3,7 @@ from uuid import UUID, uuid4
 
 from fastapi import UploadFile
 
-from settings import get_settings
+from settings import settings
 from src.dal.file_storage.base import BaseFileStorage
 from src.dal.file_storage.s3 import get_s3_file_storage
 from src.utils.resize_image import resize_image
@@ -29,6 +29,7 @@ class ImagesService:
 
     async def get_image(self, image_id: UUID, width: int, height: int) -> bytes:
         original_image = await self.get_original_image(image_id=image_id)
+        # TODO: https://www.youtube.com/watch?v=sFb7T3T1GO8
         resized_image = resize_image(image=original_image, width=width, height=height)
         return resized_image
 
@@ -52,8 +53,6 @@ class ImagesService:
 
 def get_images_service() -> ImagesService:
     file_storage = get_s3_file_storage()
-    settings = get_settings()
-
     return ImagesService(
         file_storage=file_storage,
         allowed_image_types=settings.ALLOWED_IMAGE_TYPES

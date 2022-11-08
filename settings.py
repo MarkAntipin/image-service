@@ -19,6 +19,12 @@ class Settings(BaseSettings):
     REGION_NAME: str
     BUCKET: str
 
+    IMAGE_MIN_WIDTH: int = 10
+    IMAGE_MIN_HEIGHT: int = 10
+    IMAGE_MAX_WIDTH: int = 2000
+    IMAGE_MAX_HEIGHT: int = 2000
+    SIZE_STEP: int = 10
+
     ALLOWED_IMAGE_TYPES: tp.Set[str] = {
         'image/jpeg',
         'image/jpg',
@@ -31,5 +37,4 @@ class Settings(BaseSettings):
         dotenv.load_dotenv(env_file)
 
 
-def get_settings():
-    return Settings()
+settings = Settings()

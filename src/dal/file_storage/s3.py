@@ -3,7 +3,7 @@ import typing as tp
 import aioboto3
 from botocore.exceptions import ClientError
 
-from settings import get_settings
+from settings import settings
 from src.dal.file_storage.base import BaseFileStorage
 
 
@@ -31,7 +31,6 @@ class S3FileStorage(BaseFileStorage):
 
 
 def get_s3_file_storage() -> S3FileStorage:
-    settings = get_settings()
     session = aioboto3.Session(
         aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
         aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,
