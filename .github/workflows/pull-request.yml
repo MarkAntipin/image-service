@@ -25,3 +25,11 @@ jobs:
         run: |
           poetry run flake8 .
           poetry run isort -c .
+
+      - name: Run tests
+        run: |
+          poetry run coverage run -m pytest -v tests
+
+      - name: Run coverage
+        run: |
+          poetry run coverage report -m --skip-empty --fail-under=90

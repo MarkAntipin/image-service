@@ -2,7 +2,17 @@
 Serve to serve images
 
 ## Run app
-add .env file (see .env.example)
+add .env file with the same variables as in .env.example
+
+* `AWS_ACCESS_KEY_ID` - aws access key id; `required`
+* `AWS_SECRET_ACCESS_KEY` - aws secret access key; `required`
+* `REGION_NAME` - aws region name; `required`
+* `BUCKET` - aws bucket name; `required`
+* `ALLOWED_IMAGE_TYPES` - types of images that can be added; `default`: ["image/jpeg", "image/jpg", "image/png", "image/tiff"]
+* `IMAGE_MIN_WIDTH` - minimal image width to request; `default`: 10
+* `IMAGE_MIN_HEIGHT` - minimal image height to request; `default`: 10
+* `IMAGE_MAX_WIDTH` - maximum image width to request; `default`: 2000
+* `IMAGE_MAX_HEIGHT` - maximum image height to request; `default`: 2000
 
 ```bash
 poetry install
