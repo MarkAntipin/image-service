@@ -3,9 +3,7 @@ from uuid import UUID, uuid4
 
 from fastapi import UploadFile
 
-from settings import settings
 from src.dal.file_storage.base import BaseFileStorage
-from src.dal.file_storage.s3 import get_s3_file_storage
 from src.utils.resize_image import resize_image
 
 
@@ -49,11 +47,3 @@ class ImagesService:
     def _validate_image(self, image: UploadFile) -> None:
         if image.content_type not in self._allowed_image_types:
             raise InvalidImageError(content_type=image.content_type)
-
-
-def get_images_service() -> ImagesService:
-    file_storage = get_s3_file_storage()
-    return ImagesService(
-        file_storage=file_storage,
-        allowed_image_types=settings.ALLOWED_IMAGE_TYPES
-    )

@@ -7,17 +7,19 @@ from pydantic import BaseSettings
 BASE_DIR = Path(__file__).resolve().parent
 
 
-class Settings(BaseSettings):
+class S3Settings(BaseSettings):
+    AWS_ACCESS_KEY_ID: str
+    AWS_SECRET_ACCESS_KEY: str
+    BUCKET: str
+    REGION_NAME: tp.Optional[str] = None
+
+
+class AppSettings(BaseSettings):
     PORT: int = 8080
     IS_DEBUG: bool = False
 
     TITLE: str = 'Image Service'
     VERSION: str = '0.1.0'
-
-    AWS_ACCESS_KEY_ID: str
-    AWS_SECRET_ACCESS_KEY: str
-    REGION_NAME: str
-    BUCKET: str
 
     IMAGE_MIN_WIDTH: int = 10
     IMAGE_MIN_HEIGHT: int = 10
@@ -37,4 +39,4 @@ class Settings(BaseSettings):
         dotenv.load_dotenv(env_file)
 
 
-settings = Settings()
+app_settings = AppSettings()
