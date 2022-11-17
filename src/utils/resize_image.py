@@ -8,7 +8,8 @@ def resize_image(
         image: bytes,
         width: int,
         height: int,
-        resample: int = Image.LANCZOS
+        resample: int = Image.LANCZOS,
+        # TODO: check Image.BILINEAR - for upscale, Image.NEAREST - for down scale
 ) -> bytes:
     image = Image.open(io.BytesIO(image))
 

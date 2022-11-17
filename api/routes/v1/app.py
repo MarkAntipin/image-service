@@ -7,7 +7,7 @@ routers = [
 ]
 
 
-compiled_routers = compile_routers(
+v1_routers = compile_routers(
     routers=routers,
     root_prefix='/api/v1'
 )

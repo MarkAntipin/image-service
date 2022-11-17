@@ -772,7 +772,7 @@ multidict = ">=4.0"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.10"
-content-hash = "7553a2086933f4316cdd4758063103fe3755f2178d2d1c59dfa570ecde895af6"
+content-hash = "d5640305b4c9dfcf88c04037467a2d13d95853727f0ee17b3289056d17f9339a"
 
 [metadata.files]
 aioboto3 = []
