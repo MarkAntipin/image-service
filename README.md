@@ -1,19 +1,26 @@
 # image-service
 Serve to serve images
 
-## Run app
 add .env file with the same variables as in .env.example
 
-* `AWS_ACCESS_KEY_ID` - aws access key id; `required`
-* `AWS_SECRET_ACCESS_KEY` - aws secret access key; `required`
-* `REGION_NAME` - aws region name; `required`
-* `BUCKET` - aws bucket name; `required`
-* `ALLOWED_IMAGE_TYPES` - types of images that can be added; `default`: ["image/jpeg", "image/jpg", "image/png", "image/tiff"]
-* `IMAGE_MIN_WIDTH` - minimal image width to request; `default`: 10
-* `IMAGE_MIN_HEIGHT` - minimal image height to request; `default`: 10
-* `IMAGE_MAX_WIDTH` - maximum image width to request; `default`: 2000
-* `IMAGE_MAX_HEIGHT` - maximum image height to request; `default`: 2000
+## Configuration
+### Basic
+* `STORAGE` - chose storage for your images ; `oneOf(s3, disk)`; `default: s3`
+* `IMAGE_MIN_WIDTH` - minimal image width to request; `default: 10`
+* `IMAGE_MIN_HEIGHT` - minimal image height to request; `default: 10`
+* `IMAGE_MAX_WIDTH` - maximum image width to request; `default: 2000`
+* `IMAGE_MAX_HEIGHT` - maximum image height to request; `default: 2000`
+* `ALLOWED_IMAGE_TYPES` - types of images that can be added; `default: ["image/jpeg", "image/jpg", "image/png", "image/tiff"]`
 
+### S3
+`Only of you set STORAGE=s3`
+* `S3_ACCESS_KEY_ID` - aws access key id; `required`
+* `S3_SECRET_ACCESS_KEY` - aws secret access key; `required`
+* `S3_REGION_NAME` - aws region name
+* `S3_BUCKET` - aws bucket name; `required`
+
+
+## Run app
 ```bash
 poetry install
 poetry run python run.py

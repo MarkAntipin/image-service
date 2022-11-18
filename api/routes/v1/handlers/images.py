@@ -14,6 +14,7 @@ from src.service.images import (ImageNotFoundError, ImagesService,
 router = APIRouter()
 
 
+# TODO: allow to pass your own key into handler
 @router.post(
     '',
     status_code=status.HTTP_201_CREATED,

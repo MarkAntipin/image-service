@@ -33,6 +33,14 @@ awscli = ["awscli (>=1.25.60,<1.25.61)"]
 boto3 = ["boto3 (>=1.24.59,<1.24.60)"]
 
 [[package]]
+name = "aiofiles"
+version = "22.1.0"
+description = "File support for asyncio."
+category = "main"
+optional = false
+python-versions = ">=3.7,<4.0"
+
+[[package]]
 name = "aiohttp"
 version = "3.7.4.post0"
 description = "Async http client/server framework (asyncio)"
@@ -772,11 +780,12 @@ multidict = ">=4.0"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.10"
-content-hash = "d5640305b4c9dfcf88c04037467a2d13d95853727f0ee17b3289056d17f9339a"
+content-hash = "de1f458ecb944fcdbc978928986a3e956d18c6221c0afc6d33385c9f18b7ecb8"
 
 [metadata.files]
 aioboto3 = []
 aiobotocore = []
+aiofiles = []
 aiohttp = [
     {file = "aiohttp-3.7.4.post0-cp36-cp36m-macosx_10_14_x86_64.whl", hash = "sha256:3cf75f7cdc2397ed4442594b935a11ed5569961333d49b7539ea741be2cc79d5"},
     {file = "aiohttp-3.7.4.post0-cp36-cp36m-manylinux1_i686.whl", hash = "sha256:4b302b45040890cea949ad092479e01ba25911a15e648429c7c5aae9650c67a8"},
