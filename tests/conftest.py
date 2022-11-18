@@ -11,21 +11,22 @@ def mock_env(monkeypatch: MonkeyPatch):
     monkeypatch.setenv('AWS_SECRET_ACCESS_KEY', 'AWS_SECRET_ACCESS_KEY')
     monkeypatch.setenv('REGION_NAME', 'REGION_NAME')
     monkeypatch.setenv('BUCKET', 'BUCKET')
+    monkeypatch.setenv('STORAGE', 'disk')
 
 
 @pytest.fixture()
-def mock_s3_client(mocker: MockerFixture, test_image_bytes) -> None:
-    mocker.patch('src.dal.file_storage.s3.S3FileStorage.set')
-    mocker.patch('src.dal.file_storage.s3.S3FileStorage.get', return_value=test_image_bytes)
+def mock_file_storage(mocker: MockerFixture, test_image_bytes) -> None:
+    mocker.patch('src.dal.file_storage.disk.DiskFileStorage.set')
+    mocker.patch('src.dal.file_storage.disk.DiskFileStorage.get', return_value=test_image_bytes)
 
 
 @pytest.fixture()
-def mock_s3_client_image_not_found(mocker: MockerFixture, test_image_bytes) -> None:
-    mocker.patch('src.dal.file_storage.s3.S3FileStorage.get', return_value=None)
+def mock_file_storage_image_not_found(mocker: MockerFixture, test_image_bytes) -> None:
+    mocker.patch('src.dal.file_storage.disk.DiskFileStorage.get', return_value=None)
 
 
 @pytest.fixture()
-def app(mock_env, mock_s3_client):
+def app(mock_env, mock_file_storage):
     from api.app import create_app
     app = create_app()
     return app
