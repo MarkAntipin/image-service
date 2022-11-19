@@ -23,6 +23,7 @@ class S3Settings(BaseSettings):
     SECRET_ACCESS_KEY: str
     BUCKET: str
     REGION_NAME: tp.Optional[str] = None
+    ENDPOINT_URL: tp.Optional[str] = None
 
     class Config:
         case_sensitive = False

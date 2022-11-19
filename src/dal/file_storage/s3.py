@@ -7,13 +7,19 @@ from src.dal.file_storage.base import BaseFileStorage
 
 
 class S3FileStorage(BaseFileStorage):
-    def __init__(self, bucket: str, session: aioboto3.Session) -> None:
+    def __init__(
+            self,
+            bucket: str,
+            session: aioboto3.Session,
+            endpoint_url: tp.Optional[str] = None
+    ) -> None:
         self._session = session
         self._bucket = bucket
+        self._endpoint_url = endpoint_url
 
     @property
     def client(self):
-        return self._session.client('s3')
+        return self._session.client('s3', endpoint_url=self._endpoint_url)
 
     async def set(self, key: str, file: bytes) -> None:
         async with self.client as c:

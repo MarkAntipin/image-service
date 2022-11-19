@@ -19,7 +19,11 @@ def setup_s3_storage(app: FastAPI):
         aws_secret_access_key=s3_settings.SECRET_ACCESS_KEY,
         region_name=s3_settings.REGION_NAME
     )
-    app.state.file_storage = S3FileStorage(session=app.state.s3_session, bucket=s3_settings.BUCKET)
+    app.state.file_storage = S3FileStorage(
+        session=app.state.s3_session,
+        bucket=s3_settings.BUCKET,
+        endpoint_url=s3_settings.ENDPOINT_URL
+    )
 
 
 def setup_disk_storage(app: FastAPI):
