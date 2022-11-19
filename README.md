@@ -1,8 +1,6 @@
 # image-service
 Serve to serve images
 
-add .env file with the same variables as in .env.example
-
 ## Configuration
 ### Basic
 * `STORAGE` - chose storage for your images ; `oneOf(s3, disk)`; `default: s3`
@@ -14,16 +12,25 @@ add .env file with the same variables as in .env.example
 
 ### S3
 `Only of you set STORAGE=s3`
-* `S3_ACCESS_KEY_ID` - aws access key id; `required`
-* `S3_SECRET_ACCESS_KEY` - aws secret access key; `required`
-* `S3_REGION_NAME` - aws region name
-* `S3_BUCKET` - aws bucket name; `required`
+* `S3_ACCESS_KEY_ID` - s3 access key id; `required`
+* `S3_SECRET_ACCESS_KEY` - s3 secret access key; `required`
+* `S3_REGION_NAME` - s3 region name
+* `S3_BUCKET` - s3 bucket name; `required`
+* `S3_ENDPOINT_URL` - s3 endpoint url; if you're using different from aws s3 storage, like minio
 
 
 ## Run app
+add `.env` file in the project directory with the same variables as in `.env.example`
+
+### With Docker
+```bash
+docker run --env-file .env -p 8080:8080 markantipin/image-service
+```
+
+### Without Docker
 ```bash
 poetry install
-poetry run python run.py
+poetry run uvicorn run:app --host 0.0.0.0 --port 8080 --workers 1
 ```
 
 ## API
