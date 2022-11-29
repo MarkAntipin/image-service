@@ -93,6 +93,14 @@ optional = false
 python-versions = ">=3.5.3"
 
 [[package]]
+name = "asynclog"
+version = "0.1.7"
+description = "Asynchronous log for python logging."
+category = "main"
+optional = false
+python-versions = "*"
+
+[[package]]
 name = "attrs"
 version = "22.1.0"
 description = "Classes Without Boilerplate"
@@ -714,6 +722,19 @@ anyio = ">=3.0.0,<4"
 full = ["itsdangerous", "jinja2", "python-multipart", "pyyaml", "requests"]
 
 [[package]]
+name = "testfixtures"
+version = "7.0.3"
+description = "A collection of helpers and mock objects for unit tests and doc tests."
+category = "dev"
+optional = false
+python-versions = ">=3.6"
+
+[package.extras]
+build = ["setuptools-git", "wheel", "twine"]
+docs = ["sphinx", "furo", "zope.component", "django", "sybil (>=3)", "twisted"]
+test = ["mypy", "pytest (>=3.6)", "pytest-cov", "pytest-django", "zope.component", "django", "sybil (>=3)", "twisted"]
+
+[[package]]
 name = "tomli"
 version = "2.0.1"
 description = "A lil' TOML parser"
@@ -780,7 +801,7 @@ multidict = ">=4.0"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.10"
-content-hash = "de1f458ecb944fcdbc978928986a3e956d18c6221c0afc6d33385c9f18b7ecb8"
+content-hash = "6ab5037dde8f494fe5be402746a25e9f0495a97fbde7815810a7514830ad2106"
 
 [metadata.files]
 aioboto3 = []
@@ -831,6 +852,7 @@ async-timeout = [
     {file = "async-timeout-3.0.1.tar.gz", hash = "sha256:0c3c816a028d47f659d6ff5c745cb2acf1f966da1fe5c19c77a70282b25f4c5f"},
     {file = "async_timeout-3.0.1-py3-none-any.whl", hash = "sha256:4291ca197d287d274d0b6cb5d6f8f8f82d434ed288f962539ff18cc9012f9ea3"},
 ]
+asynclog = []
 attrs = []
 backend-utils = [
     {file = "backend-utils-0.2.0.tar.gz", hash = "sha256:973c9cb19c34e40d1dedc9657c992a53fcb8b72e6079790f1075f1e6a77f1441"},
@@ -990,6 +1012,7 @@ starlette = [
     {file = "starlette-0.17.1-py3-none-any.whl", hash = "sha256:26a18cbda5e6b651c964c12c88b36d9898481cd428ed6e063f5f29c418f73050"},
     {file = "starlette-0.17.1.tar.gz", hash = "sha256:57eab3cc975a28af62f6faec94d355a410634940f10b30d68d31cb5ec1b44ae8"},
 ]
+testfixtures = []
 tomli = [
     {file = "tomli-2.0.1-py3-none-any.whl", hash = "sha256:939de3e7a6161af0c887ef91b7d41a53e7c5a1ca976325f429cb46ea9bc30ecc"},
     {file = "tomli-2.0.1.tar.gz", hash = "sha256:de526c12914f0c550d15924c62d72abc48d6fe7364aa87328337a31007fe8a4f"},
