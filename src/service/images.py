@@ -1,4 +1,6 @@
+import asyncio
 import typing as tp
+from concurrent.futures import ProcessPoolExecutor
 from uuid import UUID, uuid4
 
 from fastapi import UploadFile
@@ -21,14 +23,23 @@ class ImageNotFoundError(Exception):
 
 
 class ImagesService:
-    def __init__(self, file_storage: BaseFileStorage, allowed_image_types: tp.Set[str]):
+    def __init__(
+            self,
+            file_storage: BaseFileStorage,
+            allowed_image_types: tp.Set[str],
+            executor: ProcessPoolExecutor
+    ):
         self._file_storage = file_storage
         self._allowed_image_types = allowed_image_types
+        self._executor = executor
 
     async def get_image(self, image_id: UUID, width: int, height: int) -> bytes:
         original_image = await self.get_original_image(image_id=image_id)
         # TODO: https://www.youtube.com/watch?v=sFb7T3T1GO8
-        resized_image = resize_image(image=original_image, width=width, height=height)
+        loop = asyncio.get_running_loop()
+        resized_image = await loop.run_in_executor(
+            self._executor, resize_image, original_image, width, height
+        )
         return resized_image
 
     async def get_original_image(self, image_id: UUID) -> bytes:
