@@ -1,3 +1,5 @@
+from concurrent.futures import ProcessPoolExecutor
+
 import aioboto3
 from backend_utils.server import register_routers
 from fastapi import FastAPI
@@ -12,7 +14,7 @@ from src.dal.file_storage.s3 import S3FileStorage
 from src.utils.logging.init_logger import init_logger
 
 
-def setup_s3_storage(app: FastAPI):
+def _setup_s3_storage(app: FastAPI):
     s3_settings = S3Settings()
     app.state.s3_session = aioboto3.Session(
         aws_access_key_id=s3_settings.ACCESS_KEY_ID,
@@ -26,17 +28,21 @@ def setup_s3_storage(app: FastAPI):
     )
 
 
-def setup_disk_storage(app: FastAPI):
+def _setup_disk_storage(app: FastAPI):
     app.state.file_storage = DiskFileStorage(images_dir=IMAGES_DIR)
 
 
 def setup_storage(app: FastAPI):
     if app_settings.STORAGE == Storage.s3:
-        setup_s3_storage(app)
+        _setup_s3_storage(app)
     elif app_settings.STORAGE == Storage.disk:
-        setup_disk_storage(app)
+        _setup_disk_storage(app)
     else:
         raise ValueError('provided invalid storage type')
+
+
+def setup_process_pool_executor(app: FastAPI):
+    app.state.executor = ProcessPoolExecutor(max_workers=app_settings.IMAGE_PROCESSING_WORKERS)
 
 
 def setup_middlewares(app: FastAPI):
@@ -62,6 +68,7 @@ def create_app() -> FastAPI:
     )
     setup_middlewares(app)
     setup_storage(app)
+    setup_process_pool_executor(app)
 
     register_routers(
         app=app,

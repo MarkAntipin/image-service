@@ -45,6 +45,8 @@ class AppSettings(BaseSettings):
     IMAGE_MAX_HEIGHT: int = 2000
     SIZE_STEP: int = 10
 
+    IMAGE_PROCESSING_WORKERS: int = 3
+
     ALLOWED_IMAGE_TYPES: tp.Set[str] = {
         'image/jpeg',
         'image/jpg',

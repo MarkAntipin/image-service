@@ -8,21 +8,22 @@ def resize_image(
         image: bytes,
         width: int,
         height: int,
-        resample: int = Image.LANCZOS,
-        # TODO: check Image.BILINEAR - for upscale, Image.NEAREST - for down scale
 ) -> bytes:
     image = Image.open(io.BytesIO(image))
 
     image_format = image.format
-    image = image.copy()
-
     im_w, im_h = image.size
     ratio = max(width / im_w, height / im_h)
     new_w = int(math.ceil(im_w * ratio))
     new_h = int(math.ceil(im_h * ratio))
 
+    if new_w > im_w and new_h > im_h:
+        resample = Image.BILINEAR
+    else:
+        resample = Image.NEAREST
+
     image = image.resize((new_w, new_h), resample)
-    image = image.resize((new_w, new_h), Image.LANCZOS)
+    image = image.resize((new_w, new_h), resample)
     im_w, im_h = image.size
 
     left = int(math.ceil((im_w - width) / 2))
