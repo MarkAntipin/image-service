@@ -17,6 +17,7 @@ class LoggingMiddleware(BaseHTTPMiddleware):
             skip_paths: tp.Optional[tp.Sequence] = None
     ):
         super().__init__(app)
+        self.json_content_type = 'application/json'
         if skip_paths is None:
             self.skip_paths = {'/docs', '/openapi.json', '/readyz', '/healthz', '/metrics'}
         else:
@@ -39,9 +40,8 @@ class LoggingMiddleware(BaseHTTPMiddleware):
                     'duration_ms': request_duration * 1000,
                     'uri': path,
                     'method': request.method,
-                    'status': response.status_code
+                    'response_status': response.status_code,
                 }
             }
         )
-
         return response

@@ -35,7 +35,7 @@ class ImagesService:
 
     async def get_image(self, image_id: UUID, width: int, height: int) -> bytes:
         original_image = await self.get_original_image(image_id=image_id)
-        # TODO: https://www.youtube.com/watch?v=sFb7T3T1GO8
+        #  TODO: https://www.youtube.com/watch?v=sFb7T3T1GO8
         loop = asyncio.get_running_loop()
         resized_image = await loop.run_in_executor(
             self._executor, resize_image, original_image, width, height

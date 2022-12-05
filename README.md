@@ -3,7 +3,7 @@ Serve to serve images
 
 ## Configuration
 ### Basic
-* `IS_DEBUG` - enable debug logs; `default: false`
+* `IS_DEBUG` - enable debug logs; `default: 0`
 * `STORAGE` - chose storage for your images ; `oneOf(s3, disk)`; `default: s3`
 * `IMAGE_MIN_WIDTH` - minimal image width to request; `default: 10`
 * `IMAGE_MIN_HEIGHT` - minimal image height to request; `default: 10`

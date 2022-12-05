@@ -10,8 +10,9 @@ class RequestLog(BaseModel):
     uri: str
     method: str
 
-    status: tp.Optional[int] = None
     duration_ms: tp.Optional[int] = None
+
+    response_status: tp.Optional[int] = None
 
 
 class JsonLog(BaseModel):
@@ -59,9 +60,8 @@ class JSONLogFormatter(logging.Formatter):
             request_log = RequestLog(
                 uri=request['uri'],
                 method=request['method'],
-                status=request.get('status'),
                 duration_ms=request.get('duration_ms'),
-
+                response_status=request.get('response_status'),
             )
             log_obj.request = request_log
 

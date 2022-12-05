@@ -1,10 +1,28 @@
+_NOISY_LOGGERS = [
+    'uvicorn',
+    'uvicorn.access',
+    'botocore',
+    'botocore.retryhandler',
+    'PIL.PngImagePlugin',
+    'multipart.multipart',
+]
+
+
 def get_logging_config(
         name: str = '',
         is_debug: bool = False
 ):
     handlers = ['default'] if is_debug else ['json']
-    uvicorn_level = 'INFO' if is_debug else 'ERROR'
+    noisy_loggers_level = 'INFO' if is_debug else 'ERROR'
     level = 'DEBUG' if is_debug else 'INFO'
+
+    noisy_loggers_conf = {
+        name: {
+            'handlers': handlers,
+            'level': noisy_loggers_level,
+            'propagate': False,
+        } for name in _NOISY_LOGGERS
+    }
     return {
         'version': 1,
         'disable_existing_loggers': False,
@@ -36,20 +54,6 @@ def get_logging_config(
                 'level': level,
                 'propagate': False,
             },
-            'uvicorn': {
-                'handlers': handlers,
-                'level': uvicorn_level,
-                'propagate': False,
-            },
-            'uvicorn.access': {
-                'handlers': handlers,
-                'level': uvicorn_level,
-                'propagate': False,
-            },
-            'PIL.PngImagePlugin': {
-                'handlers': handlers,
-                'level': uvicorn_level,
-                'propagate': False,
-            }
+            **noisy_loggers_conf
         },
     }
