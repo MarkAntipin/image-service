@@ -79,5 +79,5 @@ poetry run coverage report -m --skip-empty --fail-under=90
 
 Using [k6](https://k6.io)
 ```bash
-k6 run load_tests/test.js
+k6 run load_tests/get_image.js
 ```
