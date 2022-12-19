@@ -1,9 +1,11 @@
+import logging
 from concurrent.futures import ProcessPoolExecutor
 
 import aioboto3
 from backend_utils.server import register_routers
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from starlette_exporter import PrometheusMiddleware, handle_metrics
 
 from api.middlewares.errors import ErrorsMiddleware
 from api.middlewares.logging import LoggingMiddleware
@@ -12,6 +14,8 @@ from settings import IMAGES_DIR, S3Settings, Storage, app_settings
 from src.dal.file_storage.disk import DiskFileStorage
 from src.dal.file_storage.s3 import S3FileStorage
 from src.utils.logging.init_logger import init_logger
+
+logger = logging.getLogger(app_settings.TITLE)
 
 
 def _setup_s3_storage(app: FastAPI):
@@ -55,6 +59,21 @@ def setup_middlewares(app: FastAPI):
         allow_methods=["*"],
         allow_headers=["*"],
     )
+    app.add_middleware(
+        PrometheusMiddleware,
+        app_name=app_settings.TITLE,
+        group_paths=True,
+        prefix='image_service',
+        filter_unhandled_paths=True,
+        skip_paths=['/metrics', '/docs', '/openapi.json', '/healthz', '/readyz']
+    )
+
+
+def setup_events(app: FastAPI):
+    def log_running():
+        logger.info(f'Server running on http://0.0.0.0:{app_settings.PORT}')
+
+    app.add_event_handler("startup", log_running)
 
 
 def create_app() -> FastAPI:
@@ -69,10 +88,12 @@ def create_app() -> FastAPI:
     setup_middlewares(app)
     setup_storage(app)
     setup_process_pool_executor(app)
+    setup_events(app)
 
     register_routers(
         app=app,
         routers=[*v1_routers]
     )
+    app.add_route('/metrics', handle_metrics)
 
     return app
