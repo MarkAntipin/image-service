@@ -1,9 +1,5 @@
-import io
-from uuid import UUID
-
-from fastapi import (APIRouter, Depends, File, HTTPException, Path, UploadFile,
-                     status)
-from fastapi.responses import StreamingResponse
+from fastapi import (APIRouter, Depends, File, HTTPException, Path, Response,
+                     UploadFile, status)
 
 from api.depends import get_images_service
 from api.routes.v1.handlers.models import AddImage
@@ -14,7 +10,6 @@ from src.service.images import (ImageNotFoundError, ImagesService,
 router = APIRouter()
 
 
-# TODO: allow to pass your own key into handler
 @router.post(
     '',
     status_code=status.HTTP_201_CREATED,
@@ -33,7 +28,7 @@ async def add_image(
 
 @router.get('/{width}x{height}/{image_id}')
 async def get_image(
-        image_id: UUID = Path(...),
+        image_id: str = Path(...),
         size: Size = Depends(),
         images_service: ImagesService = Depends(get_images_service)
 ):
@@ -41,16 +36,16 @@ async def get_image(
         image = await images_service.get_image(image_id=image_id, width=size.width, height=size.height)
     except ImageNotFoundError as e:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=e.detail)
-    return StreamingResponse(io.BytesIO(image))
+    return Response(content=image.content, media_type=image.content_type)
 
 
 @router.get('/{image_id}')
 async def get_original_image(
-        image_id: UUID = Path(...),
+        image_id: str = Path(...),
         images_service: ImagesService = Depends(get_images_service)
 ):
     try:
         image = await images_service.get_original_image(image_id=image_id)
     except ImageNotFoundError as e:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=e.detail)
-    return StreamingResponse(io.BytesIO(image))
+    return Response(content=image.content, media_type=image.content_type)

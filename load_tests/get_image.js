@@ -20,9 +20,9 @@ export const options = {
         }
     },
     thresholds: {
-        'http_req_duration{test_type:upscale}': ['p(90)<200'],
+        'http_req_duration{test_type:upscale}': ['p(90)<700'],
         'http_req_failed{test_type:upscale}': ['rate<0.01'],
-        'http_req_duration{test_type:downscale}': ['p(90)<700'],
+        'http_req_duration{test_type:downscale}': ['p(90)<200'],
         'http_req_failed{test_type:downscale}': ['rate<0.01'],
     },
     summaryTrendStats: ['avg', 'min', 'med', 'max', 'p(90)', 'p(95)', 'count']

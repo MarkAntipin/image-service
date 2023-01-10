@@ -16,6 +16,8 @@ aiobotocore = "^2.4.0"
 aiofiles = "^22.1.0"
 asynclog = "^0.1.7"
 starlette-exporter = "^0.14.0"
+opencv-python = "^4.6.0"
+python-magic = "^0.4.27"
 
 [tool.poetry.dev-dependencies]
 flake8 = "^5.0.4"
