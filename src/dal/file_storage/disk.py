@@ -25,4 +25,4 @@ class DiskFileStorage(BaseFileStorage):
 
         async with aiofiles.open(Path(self.images_dir, key), 'rb') as f:
             content = await f.read()
-        return content
+        return ImageGet(content=content)
