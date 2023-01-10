@@ -1,10 +1,12 @@
 import logging
+import mimetypes
 from concurrent.futures import ProcessPoolExecutor
 
 import aioboto3
 from backend_utils.server import register_routers
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from PIL import Image
 from starlette_exporter import PrometheusMiddleware, handle_metrics
 
 from api.middlewares.errors import ErrorsMiddleware
@@ -71,9 +73,19 @@ def setup_middlewares(app: FastAPI):
 
 def setup_events(app: FastAPI):
     def log_running():
-        logger.info(f'Server running on http://0.0.0.0:{app_settings.PORT}')
+        if not app_settings.IS_DEBUG:
+            logger.info(f'Server running on http://0.0.0.0:{app_settings.PORT}')
 
     app.add_event_handler("startup", log_running)
+
+
+def setup_mimetypes():
+    mimetypes.init()
+
+
+def setup_pil():
+    Image.preinit()
+    Image.init()
 
 
 def create_app() -> FastAPI:
@@ -89,6 +101,8 @@ def create_app() -> FastAPI:
     setup_storage(app)
     setup_process_pool_executor(app)
     setup_events(app)
+    setup_mimetypes()
+    setup_pil()
 
     register_routers(
         app=app,
